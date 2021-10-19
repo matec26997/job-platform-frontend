@@ -6,15 +6,19 @@ import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
-import FootLinks, {guestLinks} from "./FootLinks";
+import FootLinks, { guestLinks } from "./FootLinks";
+import { useForm } from "react-hook-form";
 const Register = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const nameError = undefined;
   const lastNError = undefined;
   const emailHelper = undefined;
   const passwordError = undefined;
-  function handleSubmit(e) {
-    console.log(e);
-  }
+
   return (
     <Fragment>
       <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
@@ -25,7 +29,13 @@ const Register = () => {
       </Typography>
       <Box component="form" nonValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
         <Grid container sx={{ m: 0, p: 0 }}>
-          <Grid item xs={12} sm={12} md={6} sx={{ pr: {xs:0,sm:0,md:1} }}>
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            md={6}
+            sx={{ pr: { xs: 0, sm: 0, md: 1 } }}
+          >
             <TextField
               margin="normal"
               fullWidth
@@ -35,13 +45,22 @@ const Register = () => {
               variant="filled"
               type="text"
               id="name"
-              name="name"
+              {...register("name", {
+                required: { value: true, message: "El nombre es requerido" },
+                pattern: { value: "asdas", message: "" },
+              })}
               label="Nombres"
               error={false}
               helperText={nameError || "Ingresa tus nombres."}
             />
           </Grid>
-          <Grid item xs={12} sm={12} md={6} sx={{ pl: {xs:0,sm:0,md:1} }}>
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            md={6}
+            sx={{ pl: { xs: 0, sm: 0, md: 1 } }}
+          >
             <TextField
               margin="normal"
               fullWidth
@@ -73,7 +92,13 @@ const Register = () => {
               }
             />
           </Grid>
-          <Grid item xs={12} sm={12} md={6} sx={{ pr: {xs:0,sm:0,md:1} }}>
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            md={6}
+            sx={{ pr: { xs: 0, sm: 0, md: 1 } }}
+          >
             <TextField
               margin="normal"
               fullWidth
@@ -88,7 +113,13 @@ const Register = () => {
               helperText={passwordError || "Ingresa una contraseña."}
             />
           </Grid>
-          <Grid item xs={12} sm={12} md={6} sx={{ pl: {xs:0,sm:0,md:1} }}>
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            md={6}
+            sx={{ pl: { xs: 0, sm: 0, md: 1 } }}
+          >
             <TextField
               margin="normal"
               fullWidth
