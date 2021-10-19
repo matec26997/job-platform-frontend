@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axiosInstance from "../config/axios";
 import AuthMain from "./auth/AuthMain";
 import GuestMain from "./guest/GuestMain";
-import { Switch, Route, NavLink } from "react-router-dom";
+import Loading from "./global/Loading";
 /**
  * This component uses the axiosInstance to
  * display
@@ -13,25 +13,28 @@ const Main = () => {
   useEffect(() => {
     getAuthInfo(setIsAuth);
   }, []);
-  return isAuth === null? "Loading":isAuth === true? <AuthMain />:<GuestMain />;
+  return isAuth === null ? (
+    <Loading />
+  ) : (
+    isAuth === true ? <AuthMain /> : <GuestMain />
+  );
 };
 /**
-   * This function determines the user's auth status
-   * For this, it signs in the user and, when invoked
-   */
- const getAuthInfo = async (setIsAuth) => {
-    const authStatus = {
-      200: true,
-      401: false,
-    };
-
-    try {
-      const response = await axiosInstance.get("api/user");
-      setIsAuth(authStatus[response.status]);
-    } catch (exception) {
-        const error = await exception;
-      setIsAuth(authStatus[error?.response?.status]);
-    }
-    
+ * This function determines the user's auth status
+ * For this, it signs in the user and, when invoked
+ */
+const getAuthInfo = async (setIsAuth) => {
+  const authStatus = {
+    200: true,
+    401: false,
   };
+
+  try {
+    const response = await axiosInstance.get("api/user");
+    setIsAuth(authStatus[response.status]);
+  } catch (exception) {
+    const error = await exception;
+    setIsAuth(authStatus[error?.response?.status]);
+  }
+};
 export default Main;
